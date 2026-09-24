@@ -1,0 +1,730 @@
+@baseUrl = http://localhost:8080/api/v1
+
+
+# =========================================================
+#                    CATEGORY APIs
+# =========================================================
+
+
+# ! TEST 01 - Create Category - SUCCESS
+# Expected: HTTP 201 Created
+# Purpose: Create a new category successfully
+
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "Books",
+  "slug": "books",
+  "description": "Books and reading materials"
+}
+
+###
+
+
+# ! TEST 02 - Create Category - DUPLICATE NAME
+# Expected: HTTP 409 Conflict
+# Purpose: Verify duplicate category name handling
+
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "Books",
+  "slug": "books-new",
+  "description": "Testing duplicate category name"
+}
+
+###
+
+
+# ! TEST 03 - Create Category - DUPLICATE SLUG
+# Expected: HTTP 409 Conflict
+# Purpose: Verify duplicate category slug handling
+
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "New Books",
+  "slug": "books",
+  "description": "Testing duplicate category slug"
+}
+
+###
+
+
+# ! TEST 04 - Create Category - VALIDATION FAILURE
+# Expected: HTTP 400 Bad Request
+# Purpose: Verify @NotBlank validation
+
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "",
+  "slug": "",
+  "description": "Invalid category"
+}
+
+###
+
+
+# ! TEST 05 - List Categories
+# Expected: HTTP 200 OK
+# Purpose: Verify all categories are returned
+
+GET {{baseUrl}}/categories
+
+###
+
+
+
+# =========================================================
+#                     PRODUCT APIs
+# =========================================================
+
+
+# ! TEST 06 - Create Product - SUCCESS
+# Expected: HTTP 201 Created
+# Purpose: Create a product using an existing category
+
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "categoryId": "bf4de052-2e23-4940-a63d-76b465e0ee2d",
+  "name": "Wireless Headphones",
+  "slug": "wireless-headphones",
+  "description": "Bluetooth wireless headphones",
+  "sku": "WH-1001",
+  "price": 2999.99
+}
+
+###
+
+
+# ! TEST 07 - Create Product - SUCCESS
+# Expected: HTTP 201 Created
+# Purpose: Create another product under a different category
+
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "categoryId": "bf4de052-2e23-4940-a63d-76b465e0ee2d",
+  "name": "Mechanical Keyboard",
+  "slug": "mechanical-keyboard",
+  "description": "Mechanical keyboard for professional and gaming use",
+  "sku": "MK-1001",
+  "price": 6499.99
+}
+
+###
+
+
+# ! TEST 08 - Create Product - DUPLICATE NAME
+# Expected: HTTP 409 Conflict
+# Purpose: Verify duplicate product name handling
+
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "categoryId": "bf4de052-2e23-4940-a63d-76b465e0ee2d",
+  "name": "Wireless Headphones",
+  "slug": "another-headphones",
+  "description": "Testing duplicate product name",
+  "sku": "WH-1002",
+  "price": 1999.99
+}
+
+###
+
+
+# ! TEST 09 - Create Product - DUPLICATE SLUG
+# Expected: HTTP 409 Conflict
+# Purpose: Verify duplicate product slug handling
+
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "categoryId": "bf4de052-2e23-4940-a63d-76b465e0ee2d",
+  "name": "Premium Headphones",
+  "slug": "wireless-headphones",
+  "description": "Testing duplicate product slug",
+  "sku": "WH-1003",
+  "price": 3999.99
+}
+
+###
+
+
+# ! TEST 10 - Create Product - DUPLICATE SKU
+# Expected: HTTP 409 Conflict
+# Purpose: Verify duplicate SKU handling
+
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "categoryId": "bf4de052-2e23-4940-a63d-76b465e0ee2d",
+  "name": "Gaming Headphones",
+  "slug": "gaming-headphones",
+  "description": "Testing duplicate product SKU",
+  "sku": "WH-1001",
+  "price": 4999.99
+}
+
+###
+
+
+# ! TEST 11 - Create Product - INVALID CATEGORY
+# Expected: HTTP 404 Not Found
+# Purpose: Verify product cannot be created with a non-existing category
+
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "categoryId": "00000000-0000-0000-0000-000000000000",
+  "name": "Invalid Category Product",
+  "slug": "invalid-category-product",
+  "description": "This should fail",
+  "sku": "INVALID-001",
+  "price": 999.99
+}
+
+###
+
+
+# ! TEST 12 - Create Product - VALIDATION FAILURE
+# Expected: HTTP 400 Bad Request
+# Purpose: Verify request validation
+
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "categoryId": null,
+  "name": "",
+  "slug": "",
+  "description": "",
+  "sku": "",
+  "price": -100
+}
+
+###
+
+
+# ! TEST 13 - List Products
+# Expected: HTTP 200 OK
+# Purpose: Verify all products are returned
+
+GET {{baseUrl}}/products
+
+###
+
+# ! TEST 14 - Get Product By ID - SUCCESS
+# Expected: HTTP 200 OK
+# Purpose: Fetch a single product by its UUID
+
+GET {{baseUrl}}/products/94c2a0f5-e629-4748-ab26-8faffddb479f
+
+###
+
+# ! TEST 15 - Get Product By ID - NOT FOUND
+# Expected: HTTP 404 Not Found
+# Purpose: Verify missing product handling
+
+GET {{baseUrl}}/products/00000000-0000-0000-0000-000000000000
+
+###
+
+# ! TEST 16 - Update Product - SUCCESS
+# Expected: HTTP 200 OK
+# Purpose: Update an existing product
+
+PUT {{baseUrl}}/products/94c2a0f5-e629-4748-ab26-8faffddb479f
+Content-Type: application/json
+
+{
+  "categoryId": "bf4de052-2e23-4940-a63d-76b465e0ee2d",
+  "name": "Mechanical Keyboard Pro",
+  "slug": "mechanical-keyboard-pro",
+  "description": "Professional mechanical keyboard with enhanced features",
+  "sku": "MK-1001-PRO",
+  "price": 7499.99
+}
+
+###
+
+# ! TEST 17 - Update Product - NOT FOUND
+# Expected: HTTP 404 Not Found
+
+PUT {{baseUrl}}/products/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "categoryId": "bf4de052-2e23-4940-a63d-76b465e0ee2d",
+  "name": "Test Product",
+  "slug": "test-product",
+  "description": "Test product",
+  "sku": "TEST-1001",
+  "price": 999.99
+}
+
+###
+
+# ! TEST 18 - Update Product - DUPLICATE SKU
+# Expected: HTTP 409 Conflict
+
+PUT {{baseUrl}}/products/94c2a0f5-e629-4748-ab26-8faffddb479f
+Content-Type: application/json
+
+{
+  "categoryId": "bf4de052-2e23-4940-a63d-76b465e0ee2d",
+  "name": "Mechanical Keyboard Pro",
+  "slug": "mechanical-keyboard-pro",
+  "description": "Professional mechanical keyboard with enhanced features",
+  "sku": "AF-1001",
+  "price": 7499.99
+}
+
+###
+
+# ! TEST 19 - Deactivate Product - SUCCESS
+# Expected: HTTP 200 OK
+# Purpose: Deactivate an existing product
+
+PATCH {{baseUrl}}/products/94c2a0f5-e629-4748-ab26-8faffddb479f/status
+Content-Type: application/json
+
+{
+  "active": false
+}
+
+###
+
+# ! TEST 20 - Activate Product - SUCCESS
+# Expected: HTTP 200 OK
+# Purpose: Reactivate an existing product
+
+PATCH {{baseUrl}}/products/94c2a0f5-e629-4748-ab26-8faffddb479f/status
+Content-Type: application/json
+
+{
+  "active": true
+}
+
+###
+
+# ! TEST 21 - Update Product Status - NOT FOUND
+# Expected: HTTP 404 Not Found
+
+PATCH {{baseUrl}}/products/00000000-0000-0000-0000-000000000000/status
+Content-Type: application/json
+
+{
+  "active": false
+}
+
+###
+
+# ! TEST 22 - Update Product Status - VALIDATION FAILURE
+# Expected: HTTP 400 Bad Request
+
+PATCH {{baseUrl}}/products/94c2a0f5-e629-4748-ab26-8faffddb479f/status
+Content-Type: application/json
+
+{}
+
+###
+
+# ! TEST 23 - Get Products - PAGINATION
+# Expected: HTTP 200 OK
+# Purpose: Retrieve first page of products
+
+GET {{baseUrl}}/products?page=0&size=2
+
+###
+
+# ! TEST 24 - Get Products - SECOND PAGE
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/products?page=1&size=2
+
+###
+
+# ! TEST 25 - Get Products - SORT BY PRICE ASCENDING
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/products?page=0&size=10&sort=price,asc
+
+###
+
+# ! TEST 26 - Get Products - SORT BY PRICE DESCENDING
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/products?page=0&size=10&sort=price,desc
+
+###
+
+# ! TEST 27 - Get Products - SORT BY NAME ASC
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/products?page=0&size=10&sort=name,asc
+
+###
+
+# ! TEST 28 - Get Products - SORT BY NAME DESC
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/products?page=0&size=10&sort=name,desc
+
+###
+
+# ! TEST 29 - Filter Products - CATEGORY
+# Expected: HTTP 200 OK
+# Purpose: Return products belonging to Electronics
+
+GET {{baseUrl}}/products?categoryId=bf4de052-2e23-4940-a63d-76b465e0ee2d&page=0&size=10
+
+###
+
+# ! TEST 30 - Filter Products - ACTIVE
+# Expected: HTTP 200 OK
+# Purpose: Return only active products
+
+GET {{baseUrl}}/products?active=true&page=0&size=10
+
+###
+
+# ! TEST 31 - Filter Products - INACTIVE
+# Expected: HTTP 200 OK
+# Purpose: Return only inactive products
+
+GET {{baseUrl}}/products?active=false&page=0&size=10
+
+###
+
+# ! TEST 32 - Filter Products - CATEGORY + ACTIVE
+# Expected: HTTP 200 OK
+# Purpose: Combine multiple filters
+
+GET {{baseUrl}}/products?categoryId=bf4de052-2e23-4940-a63d-76b465e0ee2d&active=true&page=0&size=10
+
+###
+
+# ! TEST 33 - Search Products - NAME
+# Expected: HTTP 200 OK
+# Purpose: Search product name
+
+GET {{baseUrl}}/products?search=keyboard&page=0&size=10
+
+###
+
+# ! TEST 34 - Search Products - DESCRIPTION
+# Expected: HTTP 200 OK
+# Purpose: Search product description
+
+GET {{baseUrl}}/products?search=bluetooth&page=0&size=10
+
+###
+
+# ! TEST 35 - Search Products - SKU
+# Expected: HTTP 200 OK
+# Purpose: Search product SKU
+
+GET {{baseUrl}}/products?search=MK-1001-PRO&page=0&size=10
+
+###
+
+# ! TEST 36 - Search Products - CASE INSENSITIVE
+# Expected: HTTP 200 OK
+# Purpose: Verify case-insensitive search
+
+GET {{baseUrl}}/products?search=KEYBOARD&page=0&size=10
+
+###
+
+# ! TEST 37 - Search + Category + Active + Sorting
+# Expected: HTTP 200 OK
+# Purpose: Verify composable product catalog query
+
+GET {{baseUrl}}/products?search=keyboard&categoryId=bf4de052-2e23-4940-a63d-76b465e0ee2d&active=true&page=0&size=10&sort=price,desc
+
+###
+
+# ! TEST 38 - Product List After EntityGraph
+# Expected: HTTP 200 OK
+# Purpose: Verify product listing still works after changing the fetch strategy
+
+GET {{baseUrl}}/products?page=0&size=10
+
+###
+
+# ! TEST 39 - Pagination - VALID
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/products?page=0&size=2
+
+###
+
+# ! TEST 40 - Pagination - INVALID PAGE
+# Expected: HTTP 400 Bad Request
+
+GET {{baseUrl}}/products?page=-1&size=10
+
+###
+
+# ! TEST 41 - Pagination - INVALID SIZE ZERO
+# Expected: HTTP 400 Bad Request
+
+GET {{baseUrl}}/products?page=0&size=0
+
+###
+
+# ! TEST 42 - Pagination - SIZE TOO LARGE
+# Expected: HTTP 400 Bad Request
+
+GET {{baseUrl}}/products?page=0&size=1000
+
+###
+
+# ! TEST 43 - Pagination + Sorting
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/products?page=0&size=10&sort=price,desc
+
+###
+
+# ! TEST 44 - Sorting - VALID FIELD
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/products?page=0&size=10&sort=price,desc
+
+###
+
+# ! TEST 45 - Sorting - INVALID FIELD
+# Expected: HTTP 400 Bad Request
+
+GET {{baseUrl}}/products?page=0&size=10&sort=unknownField,asc
+
+###
+
+# ! TEST 46 - Sorting - INVALID DIRECTION
+# Expected: HTTP 400 Bad Request
+
+GET {{baseUrl}}/products?page=0&size=10&sort=price,random
+
+###
+
+# ! TEST 47 - Sorting - MALFORMED PARAMETER
+# Expected: HTTP 400 Bad Request
+
+GET {{baseUrl}}/products?page=0&size=10&sort=price,desc,extra
+
+###
+
+# =========================================================
+#                    INVENTORY API
+# =========================================================
+
+# ! TEST 48 - Create Inventory
+# Expected: HTTP 201 Created
+
+POST {{baseUrl}}/inventory
+Content-Type: application/json
+
+{
+  "productId": "573bd604-6da8-420e-a66c-46f9dda5152b",
+  "quantity": 100
+}
+
+###
+
+# ! TEST 49 - Create Inventory For Second Product
+# Expected: HTTP 201 Created
+
+POST {{baseUrl}}/inventory
+Content-Type: application/json
+
+{
+  "productId": "5251aa5c-e99d-4791-ba33-fe45c55f5e9c",
+  "quantity": 50
+}
+
+###
+
+# ! TEST 50 - Duplicate Inventory
+# Expected: HTTP 409 Conflict
+
+POST {{baseUrl}}/inventory
+Content-Type: application/json
+
+{
+  "productId": "573bd604-6da8-420e-a66c-46f9dda5152b",
+  "quantity": 20
+}
+
+###
+
+# ! TEST 51 - Inventory For Missing Product
+# Expected: HTTP 404 Not Found
+
+POST {{baseUrl}}/inventory
+Content-Type: application/json
+
+{
+  "productId": "00000000-0000-0000-0000-000000000000",
+  "quantity": 10
+}
+
+###
+
+# ! TEST 52 - Get Inventory By Product
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b
+
+###
+
+# ! TEST 53 - Get All Inventory
+# Expected: HTTP 200 OK
+
+GET {{baseUrl}}/inventory
+
+###
+
+# ! TEST 54 - Add Stock
+# Expected: HTTP 200 OK
+# Expected quantity: 100 -> 125
+
+PATCH {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b/stock/add
+Content-Type: application/json
+
+{
+  "quantity": 25
+}
+
+###
+
+# ! TEST 55 - Remove Stock
+# Expected: HTTP 200 OK
+# Expected quantity: 125 -> 105
+
+PATCH {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b/stock/remove
+Content-Type: application/json
+
+{
+  "quantity": 20
+}
+
+###
+
+# ! TEST 56 - Insufficient Stock
+# Expected: HTTP 409 Conflict
+
+PATCH {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b/stock/remove
+Content-Type: application/json
+
+{
+  "quantity": 200
+}
+
+###
+
+# ! TEST 57 - Zero Stock Adjustment
+# Expected: HTTP 400 Bad Request
+
+PATCH {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b/stock/add
+Content-Type: application/json
+
+{
+  "quantity": 0
+}
+
+###
+
+# ! TEST 58 - Negative Stock Adjustment
+# Expected: HTTP 400 Bad Request
+
+PATCH {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b/stock/add
+Content-Type: application/json
+
+{
+  "quantity": -10
+}
+
+###
+
+# ! TEST 59 - Missing Stock Quantity
+# Expected: HTTP 400 Bad Request
+
+PATCH {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b/stock/add
+Content-Type: application/json
+
+{}
+
+###
+
+# ! TEST 60 - Inventory Not Found
+# Expected: HTTP 404 Not Found
+
+GET {{baseUrl}}/inventory/00000000-0000-0000-0000-000000000000
+
+###
+
+# ! TEST 61 - Add Stock To Missing Inventory
+# Expected: HTTP 404 Not Found
+
+PATCH {{baseUrl}}/inventory/00000000-0000-0000-0000-000000000000/stock/add
+Content-Type: application/json
+
+{
+  "quantity": 10
+}
+
+###
+
+# ! TEST 62 - Remove Stock From Missing Inventory
+# Expected: HTTP 404 Not Found
+
+PATCH {{baseUrl}}/inventory/00000000-0000-0000-0000-000000000000/stock/remove
+Content-Type: application/json
+
+{
+  "quantity": 10
+}
+
+###
+
+# ! TEST 63 - Remove Entire Available Stock
+# Expected: HTTP 200 OK
+# Current quantity after previous tests: 105
+# This should reduce available stock to 0
+
+PATCH {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b/stock/remove
+Content-Type: application/json
+
+{
+  "quantity": 105
+}
+
+###
+
+# ! TEST 64 - Remove Stock When Available Stock Is Zero
+# Expected: HTTP 409 Conflict
+
+PATCH {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b/stock/remove
+Content-Type: application/json
+
+{
+  "quantity": 1
+}
+
+###
+
+GET {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b
