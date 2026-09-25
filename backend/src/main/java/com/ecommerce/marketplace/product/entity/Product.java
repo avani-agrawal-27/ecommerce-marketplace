@@ -1,4 +1,4 @@
-package com.ecommerce.marketplace.product;
+package com.ecommerce.marketplace.product.entity;
 
 import com.ecommerce.marketplace.category.Category;
 import jakarta.persistence.*;

@@ -5,6 +5,8 @@ import com.ecommerce.marketplace.category.CategoryRepository;
 import com.ecommerce.marketplace.common.exception.DuplicateResourceException;
 import com.ecommerce.marketplace.common.exception.ResourceNotFoundException;
 import com.ecommerce.marketplace.product.dto.*;
+import com.ecommerce.marketplace.product.entity.Product;
+import com.ecommerce.marketplace.product.repository.ProductRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

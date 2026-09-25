@@ -1,7 +1,7 @@
-package com.ecommerce.marketplace.inventory;
+package com.ecommerce.marketplace.inventory.entity;
 
 import com.ecommerce.marketplace.common.exception.StockConflictException;
-import com.ecommerce.marketplace.product.Product;
+import com.ecommerce.marketplace.product.entity.Product;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

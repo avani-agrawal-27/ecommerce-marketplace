@@ -5,8 +5,10 @@ import com.ecommerce.marketplace.common.exception.ResourceNotFoundException;
 import com.ecommerce.marketplace.inventory.dto.AdjustStockRequest;
 import com.ecommerce.marketplace.inventory.dto.CreateInventoryRequest;
 import com.ecommerce.marketplace.inventory.dto.InventoryResponse;
-import com.ecommerce.marketplace.product.Product;
-import com.ecommerce.marketplace.product.ProductRepository;
+import com.ecommerce.marketplace.inventory.entity.Inventory;
+import com.ecommerce.marketplace.inventory.repository.InventoryRepository;
+import com.ecommerce.marketplace.product.entity.Product;
+import com.ecommerce.marketplace.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

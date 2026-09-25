@@ -1,5 +1,6 @@
-package com.ecommerce.marketplace.inventory;
+package com.ecommerce.marketplace.inventory.repository;
 
+import com.ecommerce.marketplace.inventory.entity.Inventory;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

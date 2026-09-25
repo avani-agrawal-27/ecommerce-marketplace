@@ -1067,14 +1067,215 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIwMDc3NWZkMy1iOGNiLTQyZTgtO
 
 ###
 
-### ! Test - Login customer
-POST {{baseUrl}}/auth/login
+# =========================================================
+#                       CART API
+# =========================================================
+
+
+# ! TEST 103 - Get Cart - EMPTY CART
+# Expected: HTTP 200 OK
+# Purpose: Verify an authenticated customer can retrieve an empty cart
+
+GET {{baseUrl}}/cart
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+
+###
+
+
+# ! TEST 104 - Add Item To Cart - SUCCESS
+# Expected: HTTP 200 OK
+# Purpose: Add an active product to the customer's cart
+
+POST {{baseUrl}}/cart/items
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
 Content-Type: application/json
 
 {
-    "email": "customer1@example.com",
-    "password": "Password123"
+  "productId": "5251aa5c-e99d-4791-ba33-fe45c55f5e9c",
+  "quantity": 2
 }
-### ! Test - Get current user
-GET {{baseUrl}}/users/me
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZTMyYTAwYi1hNDZiLTQ2YzAtOGUzMC0wYjY5ZTYwODZiZDciLCJlbWFpbCI6ImN1c3RvbWVyMUBleGFtcGxlLmNvbSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE3OTAzMzA1NjksImV4cCI6MTc5MDMzNDE2OX0.jZp3zXKUPa0m8qG1UV9qn0NYpiIvL-mjODMa6acx7hDIOrGW053RofSv7Os12oht
+
+###
+
+
+# ! TEST 105 - Get Cart - AFTER ADDING ITEM
+# Expected: HTTP 200 OK
+# Purpose: Verify the added product and calculated cart total
+
+GET {{baseUrl}}/cart
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+
+###
+
+
+# ! TEST 106 - Add Existing Product To Cart
+# Expected: HTTP 200 OK
+# Purpose: Verify adding an existing product increases its quantity instead of creating a duplicate cart item
+
+POST {{baseUrl}}/cart/items
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Content-Type: application/json
+
+{
+  "productId": "573bd604-6da8-420e-a66c-46f9dda5152b",
+  "quantity": 3
+}
+
+###
+
+
+# ! TEST 107 - Update Cart Item Quantity - SUCCESS
+# Expected: HTTP 200 OK
+# Purpose: Verify an existing cart item quantity can be updated
+
+PATCH {{baseUrl}}/cart/items/573bd604-6da8-420e-a66c-46f9dda5152b
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Content-Type: application/json
+
+{
+  "quantity": 4
+}
+
+###
+
+
+# ! TEST 108 - Update Cart Item - INVALID QUANTITY
+# Expected: HTTP 400 Bad Request
+# Purpose: Verify quantity must be greater than zero
+
+PATCH {{baseUrl}}/cart/items/573bd604-6da8-420e-a66c-46f9dda5152b
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Content-Type: application/json
+
+{
+  "quantity": 0
+}
+
+###
+
+
+# ! TEST 109 - Add Item - INSUFFICIENT INVENTORY
+# Expected: HTTP 400 Bad Request
+# Purpose: Verify cart cannot contain quantity greater than available inventory
+
+POST {{baseUrl}}/cart/items
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Content-Type: application/json
+
+{
+  "productId": "573bd604-6da8-420e-a66c-46f9dda5152b",
+  "quantity": 999999
+}
+
+###
+
+
+# ! TEST 110 - Add Item - PRODUCT NOT FOUND
+# Expected: HTTP 404 Not Found
+# Purpose: Verify cart cannot contain a non-existing product
+
+POST {{baseUrl}}/cart/items
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Content-Type: application/json
+
+{
+  "productId": "00000000-0000-0000-0000-000000000000",
+  "quantity": 1
+}
+
+###
+
+
+# ! TEST 111 - Remove Cart Item - SUCCESS
+# Expected: HTTP 200 OK
+# Purpose: Verify an item can be removed from the cart
+
+DELETE {{baseUrl}}/cart/items/573bd604-6da8-420e-a66c-46f9dda5152b
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+
+###
+
+
+# ! TEST 112 - Remove Cart Item - NOT FOUND
+# Expected: HTTP 404 Not Found
+# Purpose: Verify removing a product that is not in the cart returns not found
+
+DELETE {{baseUrl}}/cart/items/00000000-0000-0000-0000-000000000000
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+
+###
+
+
+# ! TEST 113 - Clear Cart - SUCCESS
+# Expected: HTTP 204 No Content
+# Purpose: Verify all items can be removed from the customer's cart
+
+DELETE {{baseUrl}}/cart
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+
+###
+
+
+# ! TEST 114 - Get Cart - AFTER CLEAR
+# Expected: HTTP 200 OK
+# Purpose: Verify the cart is empty after clearing
+
+GET {{baseUrl}}/cart
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+
+###
+
+
+# ! TEST 115 - Get Cart Without Authentication
+# Expected: HTTP 401 Unauthorized
+# Purpose: Verify cart APIs require authentication
+
+GET {{baseUrl}}/cart
+
+###
+
+
+# ! TEST 116 - Add Item Without Authentication
+# Expected: HTTP 401 Unauthorized
+# Purpose: Verify unauthenticated users cannot add items to a cart
+
+POST {{baseUrl}}/cart/items
+Content-Type: application/json
+
+{
+  "productId": "573bd604-6da8-420e-a66c-46f9dda5152b",
+  "quantity": 1
+}
+
+###
+
+
+# ! TEST 117 - Add Item - MISSING PRODUCT ID
+# Expected: HTTP 400 Bad Request
+# Purpose: Verify productId is required
+
+POST {{baseUrl}}/cart/items
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Content-Type: application/json
+
+{
+  "quantity": 1
+}
+
+###
+
+
+# ! TEST 118 - Add Item - INVALID QUANTITY
+# Expected: HTTP 400 Bad Request
+# Purpose: Verify quantity cannot be zero or negative
+
+POST {{baseUrl}}/cart/items
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Content-Type: application/json
+
+{
+  "productId": "573bd604-6da8-420e-a66c-46f9dda5152b",
+  "quantity": 0
+}
+
+###

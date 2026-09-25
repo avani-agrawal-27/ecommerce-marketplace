@@ -1,6 +1,7 @@
 package com.ecommerce.marketplace.product;
 
 import com.ecommerce.marketplace.category.Category;
+import com.ecommerce.marketplace.product.entity.Product;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
