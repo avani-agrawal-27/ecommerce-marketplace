@@ -726,5 +726,355 @@ Content-Type: application/json
 }
 
 ###
+### =====================================================
+### AUTHENTICATION API TESTS
+### =====================================================
 
-GET {{baseUrl}}/inventory/573bd604-6da8-420e-a66c-46f9dda5152b
+
+### ! Test 65 - Register new customer
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "customer1@example.com",
+  "password": "Password123",
+  "firstName": "Test",
+  "lastName": "Customer"
+}
+
+
+### ! Test 66 - Register second customer
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "customer2@example.com",
+  "password": "Password123",
+  "firstName": "Another",
+  "lastName": "Customer"
+}
+
+
+### ! Test 67 - Register duplicate email
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "customer1@example.com",
+  "password": "Password123",
+  "firstName": "Duplicate",
+  "lastName": "Customer"
+}
+
+
+### ! Test 68 - Register with invalid email
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "invalid-email",
+  "password": "Password123",
+  "firstName": "Invalid",
+  "lastName": "Email"
+}
+
+
+### ! Test 69 - Register with missing email
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "password": "Password123",
+  "firstName": "Missing",
+  "lastName": "Email"
+}
+
+
+### ! Test 70 - Register with blank email
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "",
+  "password": "Password123",
+  "firstName": "Blank",
+  "lastName": "Email"
+}
+
+
+### ! Test 71 - Register with password less than 8 characters
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "shortpassword@example.com",
+  "password": "Pass1",
+  "firstName": "Short",
+  "lastName": "Password"
+}
+
+
+### ! Test 72 - Register with missing password
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "missingpassword@example.com",
+  "firstName": "Missing",
+  "lastName": "Password"
+}
+
+
+### ! Test 73 - Register with missing first name
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "missingfirstname@example.com",
+  "password": "Password123",
+  "lastName": "User"
+}
+
+
+### ! Test 74 - Register with blank first name
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "blankfirstname@example.com",
+  "password": "Password123",
+  "firstName": "",
+  "lastName": "User"
+}
+
+
+### ! Test 75 - Register with null last name
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "null-lastnam@example.com",
+  "password": "Password123",
+  "firstName": "Null",
+  "lastName": null
+}
+
+
+### ! Test 76 - Register with email containing uppercase characters
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "UpperCase@example.com",
+  "password": "Password123",
+  "firstName": "Upper",
+  "lastName": "Case"
+}
+
+
+### ! Test 77 - Login with valid credentials
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "customer2@example.com",
+  "password": "Password123"
+}
+
+
+### ! Test 78 - Login with wrong password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "customer1@example.com",
+  "password": "WrongPassword123"
+}
+
+
+### ! Test 79 - Login with non-existing email
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "doesnotexist@example.com",
+  "password": "Password123"
+}
+
+
+### ! Test 80 - Login with invalid email
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "invalid-email",
+  "password": "Password123"
+}
+
+
+### ! Test 81 - Login with missing email
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "password": "Password123"
+}
+
+
+### ! Test 82 - Login with missing password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "customer1@example.com"
+}
+
+
+### ! Test 83 - Login with blank password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "customer1@example.com",
+  "password": ""
+}
+
+
+### ! Test 84 - Login with blank email
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "",
+  "password": "Password123"
+}
+
+### ! Test 85 - SQL injection in product search
+GET {{baseUrl}}/products?search=' OR '1'='1
+
+
+### ! Test 86 - SQL injection in product search with SQL comment
+GET {{baseUrl}}/products?search=' OR 1=1 --
+
+
+### ! Test 87 - SQL injection in email during login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "' OR '1'='1",
+  "password": "anything"
+}
+### ! Test 88 - Access current user without JWT
+GET {{baseUrl}}/users/me
+
+
+### ! Test 89 - Access current user with invalid JWT
+GET {{baseUrl}}/users/me
+Authorization: Bearer invalid-token
+
+
+### ! Test 90 - Access current user with malformed JWT
+GET {{baseUrl}}/users/me
+Authorization: Bearer abc.def.ghi
+
+
+### ! Test 91 - Access current user with tampered JWT
+GET {{baseUrl}}/users/me
+Authorization: Bearer YOUR_TAMPERED_TOKEN
+
+
+### ! Test 92 - Access current user with valid JWT (get token from 77)
+GET {{baseUrl}}/users/me
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZTMyYTAwYi1hNDZiLTQ2YzAtOGUzMC0wYjY5ZTYwODZiZDciLCJlbWFpbCI6ImN1c3RvbWVyMUBleGFtcGxlLmNvbSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE3OTAyNzg4NDksImV4cCI6MTc5MDI4MjQ0OX0.mnY23UrLiqzaEEGV7YH_wiXRIUJbw_5glJEUveBfSOSyjOJsJH-ApbbLkiWC1K3a
+
+### ! Test 93 - Register seller test user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "seller@example.com",
+  "password": "Password123",
+  "firstName": "Test",
+  "lastName": "Seller"
+}
+
+
+### ! Test 94 - Register admin test user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "Password123",
+  "firstName": "Test",
+  "lastName": "Admin"
+}
+
+### ! Test 95 - Login as seller
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "seller@example.com",
+  "password": "Password123"
+}
+
+
+### ! Test 96 - Login as admin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "Password123"
+}
+
+
+### ! Test 77 - Login with valid credentials
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "customer1@example.com",
+  "password": "Password123"
+}
+
+
+### ! Test 97 - Customer denied seller access YOUR_CUSTOMER_TOKEN
+GET {{baseUrl}}/seller/access
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZTMyYTAwYi1hNDZiLTQ2YzAtOGUzMC0wYjY5ZTYwODZiZDciLCJlbWFpbCI6ImN1c3RvbWVyMUBleGFtcGxlLmNvbSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE3OTAyODAwMzksImV4cCI6MTc5MDI4MzYzOX0.242nLytD2VYojToUHScbJXL9iDIT9ybipJYMO9QYWl2H-4cjoNIZs3Pv9zZq84Jn
+
+### ! Test 98 - Customer denied admin access YOUR_CUSTOMER_TOKEN
+GET {{baseUrl}}/admin/access
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZTMyYTAwYi1hNDZiLTQ2YzAtOGUzMC0wYjY5ZTYwODZiZDciLCJlbWFpbCI6ImN1c3RvbWVyMUBleGFtcGxlLmNvbSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE3OTAyODAwMzksImV4cCI6MTc5MDI4MzYzOX0.242nLytD2VYojToUHScbJXL9iDIT9ybipJYMO9QYWl2H-4cjoNIZs3Pv9zZq84Jn
+
+### ! Test 99 - Seller allowed seller access YOUR_SELLER_TOKEN
+GET {{baseUrl}}/seller/access
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI2NTJmNTliOC04ZGIzLTQxMzMtYmIwMi0zMDA0MTQ2OWFmMTYiLCJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNzkwMjgwNjg2LCJleHAiOjE3OTAyODQyODZ9.wxSgWe_ZdbCuT6AZa5-O6-PJ4Ewn7yOYwoTKTCGi6R4h_fcE80eqpgHZK9K6_heT
+
+### ! Test 100 - Seller denied admin access YOUR_SELLER_TOKEN
+GET {{baseUrl}}/admin/access
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI2NTJmNTliOC04ZGIzLTQxMzMtYmIwMi0zMDA0MTQ2OWFmMTYiLCJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNzkwMjgwNjg2LCJleHAiOjE3OTAyODQyODZ9.wxSgWe_ZdbCuT6AZa5-O6-PJ4Ewn7yOYwoTKTCGi6R4h_fcE80eqpgHZK9K6_heT
+
+### ! Test 101 - Admin allowed admin access YOUR_ADMIN_TOKEN
+GET {{baseUrl}}/admin/access
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIwMDc3NWZkMy1iOGNiLTQyZTgtOWZkNy1iYzE1NTZhZjM1NDQiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTc5MDI4MDc2NCwiZXhwIjoxNzkwMjg0MzY0fQ.nCXyJfxiIaTFi7biZVvOIRiyGJntfdaWxF0gY0rDVbDTDVmVFpG9KXktOHZ1xM2r
+
+### ! Test 102 - Admin denied seller access YOUR_ADMIN_TOKEN
+GET {{baseUrl}}/seller/access
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIwMDc3NWZkMy1iOGNiLTQyZTgtOWZkNy1iYzE1NTZhZjM1NDQiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTc5MDI4MDc2NCwiZXhwIjoxNzkwMjg0MzY0fQ.nCXyJfxiIaTFi7biZVvOIRiyGJntfdaWxF0gY0rDVbDTDVmVFpG9KXktOHZ1xM2r
+
+###
+
+### ! Test - Login customer
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "customer1@example.com",
+    "password": "Password123"
+}
+### ! Test - Get current user
+GET {{baseUrl}}/users/me
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZTMyYTAwYi1hNDZiLTQ2YzAtOGUzMC0wYjY5ZTYwODZiZDciLCJlbWFpbCI6ImN1c3RvbWVyMUBleGFtcGxlLmNvbSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE3OTAzMzA1NjksImV4cCI6MTc5MDMzNDE2OX0.jZp3zXKUPa0m8qG1UV9qn0NYpiIvL-mjODMa6acx7hDIOrGW053RofSv7Os12oht

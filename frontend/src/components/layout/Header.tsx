@@ -1,23 +1,57 @@
-function Header() {
-    return (
-        <header className="app-header">
-            <div className="header-container">
-                <a className="brand" href="/products">
-                    <span className="brand-mark">E</span>
-                    <span>E-Commerce Marketplace</span>
-                </a>
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/AuthContext";
 
-                <nav className="header-nav">
-                    <a href="/products">Products</a>
-                    <a href="#">Categories</a>
-                    <a href="#">Orders</a>
-                    <button className="cart-button">
-                        🛒 Cart
-                    </button>
-                </nav>
-            </div>
-        </header>
+const Header = () => {
+    const { user, isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
+
+    return (
+      <header className="app-header">
+        <div className="header-container">
+          <Link to="/products" className="brand">
+            <span className="brand-mark">M</span>
+            Marketplace
+          </Link>
+
+          <nav className="header-nav">
+            <Link to="/products">Products</Link>
+
+            <a href="#">Categories</a>
+
+            <a href="#">Orders</a>
+
+            {isAuthenticated ? (
+              <>
+                <span className="user-greeting">Hello, {user?.firstName}</span>
+
+                <button
+                  type="button"
+                  className="logout-button"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login">Login</Link>
+
+                <Link to="/register">Register</Link>
+              </>
+            )}
+
+            <Link to="/cart" className="cart-link">
+              Cart
+            </Link>
+          </nav>
+        </div>
+      </header>
     );
-}
+};
 
 export default Header;

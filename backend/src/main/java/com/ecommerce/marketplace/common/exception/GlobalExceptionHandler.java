@@ -1,6 +1,7 @@
 package com.ecommerce.marketplace.common.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -82,6 +83,18 @@ public class GlobalExceptionHandler {
                 "status", 409,
                 "error", "Conflict",
                 "message", exception.getMessage()
+        );
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Map<String, Object> handleAuthenticationException(
+            AuthenticationException exception) {
+
+        return Map.of(
+                "status", 401,
+                "error", "Unauthorized",
+                "message", "Invalid email or password"
         );
     }
 }
