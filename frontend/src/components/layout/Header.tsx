@@ -2,56 +2,56 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
 
 const Header = () => {
-    const { user, isAuthenticated, logout } = useAuth();
-    const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
-    const handleLogout = () => {
-        logout();
-        navigate("/login");
-    };
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
-    return (
-      <header className="app-header">
-        <div className="header-container">
-          <Link to="/products" className="brand">
-            <span className="brand-mark">M</span>
-            Marketplace
+  return (
+    <header className="app-header">
+      <div className="header-container">
+        <Link to="/products" className="brand">
+          <span className="brand-mark">M</span>
+          Marketplace
+        </Link>
+
+        <nav className="header-nav">
+          <Link to="/products">Products</Link>
+
+          <Link to="/orders" className="cart-link">
+            Orders
           </Link>
 
-          <nav className="header-nav">
-            <Link to="/products">Products</Link>
+          {isAuthenticated ? (
+            <>
+              <span className="user-greeting">Hello, {user?.firstName}</span>
 
-            <a href="#">Categories</a>
+              <button
+                type="button"
+                className="logout-button"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
 
-            <a href="#">Orders</a>
+              <Link to="/register">Register</Link>
+            </>
+          )}
 
-            {isAuthenticated ? (
-              <>
-                <span className="user-greeting">Hello, {user?.firstName}</span>
-
-                <button
-                  type="button"
-                  className="logout-button"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/login">Login</Link>
-
-                <Link to="/register">Register</Link>
-              </>
-            )}
-
-            <Link to="/cart" className="cart-link">
-              Cart
-            </Link>
-          </nav>
-        </div>
-      </header>
-    );
+          <Link to="/cart" className="cart-link">
+            Cart
+          </Link>
+        </nav>
+      </div>
+    </header>
+  );
 };
 
 export default Header;

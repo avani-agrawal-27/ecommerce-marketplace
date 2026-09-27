@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { CartResponse } from "../../types/cart";
 
 import {
@@ -39,6 +40,8 @@ function Cart() {
     }
 
     try {
+      setError("");
+
       const updatedCart = await updateCartItem(productId, { quantity });
 
       setCart(updatedCart);
@@ -50,6 +53,8 @@ function Cart() {
 
   const handleRemove = async (productId: string) => {
     try {
+      setError("");
+
       const updatedCart = await removeCartItem(productId);
 
       setCart(updatedCart);
@@ -61,8 +66,9 @@ function Cart() {
 
   const handleClearCart = async () => {
     try {
-      await clearCart();
+      setError("");
 
+      await clearCart();
       await loadCart();
     } catch (error) {
       console.error(error);
@@ -71,18 +77,35 @@ function Cart() {
   };
 
   if (loading) {
-    return <p>Loading cart...</p>;
+    return (
+      <div className="cart-page">
+        <div className="state-message">Loading cart...</div>
+      </div>
+    );
   }
 
   if (error && !cart) {
-    return <p>{error}</p>;
+    return (
+      <div className="cart-page">
+        <div className="state-message error">{error}</div>
+      </div>
+    );
   }
 
   if (!cart || cart.items.length === 0) {
     return (
       <div className="cart-page">
-        <h1>Your Cart</h1>
-        <p>Your cart is empty.</p>
+        <div className="cart-header">
+          <h1>Your Cart</h1>
+        </div>
+
+        <div className="empty-cart">
+          <h2>Your cart is empty</h2>
+
+          <p>Add some products to your cart to get started.</p>
+
+          <Link to="/products">Continue Shopping</Link>
+        </div>
       </div>
     );
   }
@@ -90,56 +113,94 @@ function Cart() {
   return (
     <div className="cart-page">
       <div className="cart-header">
-        <h1>Your Cart</h1>
+        <div>
+          <p className="eyebrow">Shopping Cart</p>
 
-        <button onClick={handleClearCart}>Clear Cart</button>
+          <h1>Your Cart</h1>
+        </div>
+
+        <button
+          type="button"
+          className="clear-cart-button"
+          onClick={handleClearCart}
+        >
+          Clear Cart
+        </button>
       </div>
 
-      {error && <p className="error-message">{error}</p>}
+      {error && <div className="cart-error">{error}</div>}
 
       <div className="cart-items">
         {cart.items.map((item: CartResponse["items"][number]) => (
           <div key={item.id} className="cart-item">
-            <div>
-              <h3>{item.productName}</h3>
+            <div className="cart-item-info">
+              <h2>{item.productName}</h2>
+
               <p>SKU: {item.sku}</p>
-              <p>₹{item.unitPrice.toFixed(2)}</p>
+
+              <p className="cart-item-price">
+                ₹{item.unitPrice.toFixed(2)} each
+              </p>
             </div>
 
             <div className="cart-item-actions">
               <button
+                type="button"
+                className="cart-quantity-button"
                 onClick={() =>
                   handleQuantityChange(item.productId, item.quantity - 1)
                 }
                 disabled={item.quantity <= 1}
+                aria-label="Decrease quantity"
               >
-                -
+                −
               </button>
 
-              <span>{item.quantity}</span>
+              <span className="cart-quantity">{item.quantity}</span>
 
               <button
+                type="button"
+                className="cart-quantity-button"
                 onClick={() =>
                   handleQuantityChange(item.productId, item.quantity + 1)
                 }
+                aria-label="Increase quantity"
               >
                 +
               </button>
 
-              <button onClick={() => handleRemove(item.productId)}>
+              <button
+                type="button"
+                className="cart-remove-button"
+                onClick={() => handleRemove(item.productId)}
+              >
                 Remove
               </button>
             </div>
 
-            <div>₹{item.subtotal.toFixed(2)}</div>
+            <div className="cart-item-total">₹{item.subtotal.toFixed(2)}</div>
           </div>
         ))}
       </div>
 
       <div className="cart-summary">
-        <h2>Total: ₹{cart.totalAmount.toFixed(2)}</h2>
+        <h2>Order Summary</h2>
 
-        <button>Proceed to Checkout</button>
+        <div className="cart-summary-row">
+          <span>Subtotal</span>
+
+          <span>₹{cart.totalAmount.toFixed(2)}</span>
+        </div>
+
+        <div className="cart-summary-total">
+          <span>Total</span>
+
+          <span>₹{cart.totalAmount.toFixed(2)}</span>
+        </div>
+
+        <button type="button" className="checkout-button">
+          Checkout — Coming Soon
+        </button>
       </div>
     </div>
   );

@@ -7,6 +7,8 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Cart from "./pages/cart/Cart";
+import OrderList from "./pages/orders/OrderList";
+import OrderDetails from "./pages/orders/OrderDetails";
 
 function App() {
   return (
@@ -21,7 +23,8 @@ function App() {
 
           {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/orders" element={<div>Orders</div>} />
+            <Route path="/orders" element={<OrderList />} />
+            <Route path="/orders/:orderId" element={<OrderDetails />} />
             <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>

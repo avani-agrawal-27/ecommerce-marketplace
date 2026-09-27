@@ -986,7 +986,7 @@ Authorization: Bearer YOUR_TAMPERED_TOKEN
 
 ### ! Test 92 - Access current user with valid JWT (get token from 77)
 GET {{baseUrl}}/users/me
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZTMyYTAwYi1hNDZiLTQ2YzAtOGUzMC0wYjY5ZTYwODZiZDciLCJlbWFpbCI6ImN1c3RvbWVyMUBleGFtcGxlLmNvbSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE3OTAyNzg4NDksImV4cCI6MTc5MDI4MjQ0OX0.mnY23UrLiqzaEEGV7YH_wiXRIUJbw_5glJEUveBfSOSyjOJsJH-ApbbLkiWC1K3a
+Authorization: Bearer <AUTO_AUTH>
 
 ### ! Test 93 - Register seller test user
 POST {{baseUrl}}/auth/register
@@ -1043,27 +1043,27 @@ Content-Type: application/json
 
 ### ! Test 97 - Customer denied seller access YOUR_CUSTOMER_TOKEN
 GET {{baseUrl}}/seller/access
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZTMyYTAwYi1hNDZiLTQ2YzAtOGUzMC0wYjY5ZTYwODZiZDciLCJlbWFpbCI6ImN1c3RvbWVyMUBleGFtcGxlLmNvbSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE3OTAyODAwMzksImV4cCI6MTc5MDI4MzYzOX0.242nLytD2VYojToUHScbJXL9iDIT9ybipJYMO9QYWl2H-4cjoNIZs3Pv9zZq84Jn
+Authorization: Bearer <AUTO_AUTH>
 
 ### ! Test 98 - Customer denied admin access YOUR_CUSTOMER_TOKEN
 GET {{baseUrl}}/admin/access
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZTMyYTAwYi1hNDZiLTQ2YzAtOGUzMC0wYjY5ZTYwODZiZDciLCJlbWFpbCI6ImN1c3RvbWVyMUBleGFtcGxlLmNvbSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE3OTAyODAwMzksImV4cCI6MTc5MDI4MzYzOX0.242nLytD2VYojToUHScbJXL9iDIT9ybipJYMO9QYWl2H-4cjoNIZs3Pv9zZq84Jn
+Authorization: Bearer <AUTO_AUTH>
 
 ### ! Test 99 - Seller allowed seller access YOUR_SELLER_TOKEN
 GET {{baseUrl}}/seller/access
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI2NTJmNTliOC04ZGIzLTQxMzMtYmIwMi0zMDA0MTQ2OWFmMTYiLCJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNzkwMjgwNjg2LCJleHAiOjE3OTAyODQyODZ9.wxSgWe_ZdbCuT6AZa5-O6-PJ4Ewn7yOYwoTKTCGi6R4h_fcE80eqpgHZK9K6_heT
+Authorization: Bearer <AUTO_AUTH>
 
 ### ! Test 100 - Seller denied admin access YOUR_SELLER_TOKEN
 GET {{baseUrl}}/admin/access
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI2NTJmNTliOC04ZGIzLTQxMzMtYmIwMi0zMDA0MTQ2OWFmMTYiLCJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNzkwMjgwNjg2LCJleHAiOjE3OTAyODQyODZ9.wxSgWe_ZdbCuT6AZa5-O6-PJ4Ewn7yOYwoTKTCGi6R4h_fcE80eqpgHZK9K6_heT
+Authorization: Bearer <AUTO_AUTH>
 
 ### ! Test 101 - Admin allowed admin access YOUR_ADMIN_TOKEN
 GET {{baseUrl}}/admin/access
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIwMDc3NWZkMy1iOGNiLTQyZTgtOWZkNy1iYzE1NTZhZjM1NDQiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTc5MDI4MDc2NCwiZXhwIjoxNzkwMjg0MzY0fQ.nCXyJfxiIaTFi7biZVvOIRiyGJntfdaWxF0gY0rDVbDTDVmVFpG9KXktOHZ1xM2r
+Authorization: Bearer <AUTO_AUTH>
 
 ### ! Test 102 - Admin denied seller access YOUR_ADMIN_TOKEN
 GET {{baseUrl}}/seller/access
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIwMDc3NWZkMy1iOGNiLTQyZTgtOWZkNy1iYzE1NTZhZjM1NDQiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZXMiOiJBRE1JTiIsImlhdCI6MTc5MDI4MDc2NCwiZXhwIjoxNzkwMjg0MzY0fQ.nCXyJfxiIaTFi7biZVvOIRiyGJntfdaWxF0gY0rDVbDTDVmVFpG9KXktOHZ1xM2r
+Authorization: Bearer <AUTO_AUTH>
 
 ###
 
@@ -1077,7 +1077,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIwMDc3NWZkMy1iOGNiLTQyZTgtO
 # Purpose: Verify an authenticated customer can retrieve an empty cart
 
 GET {{baseUrl}}/cart
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 
 ###
 
@@ -1087,7 +1087,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtY
 # Purpose: Add an active product to the customer's cart
 
 POST {{baseUrl}}/cart/items
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
 {
@@ -1103,7 +1103,7 @@ Content-Type: application/json
 # Purpose: Verify the added product and calculated cart total
 
 GET {{baseUrl}}/cart
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 
 ###
 
@@ -1113,7 +1113,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtY
 # Purpose: Verify adding an existing product increases its quantity instead of creating a duplicate cart item
 
 POST {{baseUrl}}/cart/items
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
 {
@@ -1129,7 +1129,7 @@ Content-Type: application/json
 # Purpose: Verify an existing cart item quantity can be updated
 
 PATCH {{baseUrl}}/cart/items/573bd604-6da8-420e-a66c-46f9dda5152b
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
 {
@@ -1144,7 +1144,7 @@ Content-Type: application/json
 # Purpose: Verify quantity must be greater than zero
 
 PATCH {{baseUrl}}/cart/items/573bd604-6da8-420e-a66c-46f9dda5152b
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
 {
@@ -1159,7 +1159,7 @@ Content-Type: application/json
 # Purpose: Verify cart cannot contain quantity greater than available inventory
 
 POST {{baseUrl}}/cart/items
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
 {
@@ -1175,7 +1175,7 @@ Content-Type: application/json
 # Purpose: Verify cart cannot contain a non-existing product
 
 POST {{baseUrl}}/cart/items
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
 {
@@ -1191,7 +1191,7 @@ Content-Type: application/json
 # Purpose: Verify an item can be removed from the cart
 
 DELETE {{baseUrl}}/cart/items/573bd604-6da8-420e-a66c-46f9dda5152b
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 
 ###
 
@@ -1201,7 +1201,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtY
 # Purpose: Verify removing a product that is not in the cart returns not found
 
 DELETE {{baseUrl}}/cart/items/00000000-0000-0000-0000-000000000000
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 
 ###
 
@@ -1211,7 +1211,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtY
 # Purpose: Verify all items can be removed from the customer's cart
 
 DELETE {{baseUrl}}/cart
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 
 ###
 
@@ -1221,7 +1221,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtY
 # Purpose: Verify the cart is empty after clearing
 
 GET {{baseUrl}}/cart
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 
 ###
 
@@ -1255,7 +1255,7 @@ Content-Type: application/json
 # Purpose: Verify productId is required
 
 POST {{baseUrl}}/cart/items
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
 {
@@ -1270,7 +1270,7 @@ Content-Type: application/json
 # Purpose: Verify quantity cannot be zero or negative
 
 POST {{baseUrl}}/cart/items
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4ZGE2ODAzZS1hZDAyLTRkMzYtYTYyNS1hNTIyYTUzYTE2NmYiLCJlbWFpbCI6ImF2YW5pQGV4YW1wbGUuY29tIiwicm9sZXMiOiJDVVNUT01FUiIsImlhdCI6MTc5MDM1MzExMCwiZXhwIjoxNzkwMzU2NzEwfQ.OjDyhAjmBQSaxghdvIciYvBva6k7QT46ZxsuPRWd-d4b6cdzVM9UHm1bFVTKV4s-
+Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
 {
@@ -1278,4 +1278,261 @@ Content-Type: application/json
   "quantity": 0
 }
 
+###
+
+### ================================================================
+### ORDER MANAGEMENT TESTS
+### ================================================================
+
+# ! TEST 119 - Create Order - SUCCESS
+
+# Expected: HTTP 201
+
+# Purpose: Create an order from the authenticated customer's populated cart
+
+POST http://localhost:8080/api/v1/orders
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "shippingFirstName": "Test",
+  "shippingLastName": "Customer",
+  "shippingAddressLine1": "123 Test Street",
+  "shippingAddressLine2": "Apartment 101",
+  "shippingCity": "Mumbai",
+  "shippingState": "Maharashtra",
+  "shippingPostalCode": "400001",
+  "shippingCountry": "India",
+  "shippingPhone": "9876543210"
+}
+# ! TEST 120 - Get Order By ID - SUCCESS
+# Expected: HTTP 200
+# Purpose: Verify an authenticated customer can retrieve the order they created
+# NOTE: Replace 0c5fab43-c745-49b1-812b-f74db4aa0e57 with the ID returned by TEST 119
+
+GET http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
+Authorization: Bearer <AUTO_AUTH>
+
+
+# ! TEST 121 - Get My Orders - SUCCESS
+# Expected: HTTP 200
+# Purpose: Verify the authenticated customer can retrieve their order history
+
+GET http://localhost:8080/api/v1/orders
+Authorization: Bearer <AUTO_AUTH>
+
+
+# ! TEST 122 - Create Order - EMPTY CART
+# Expected: HTTP 400
+# Purpose: Verify an order cannot be created when the customer's cart is empty
+#
+# Run this after TEST 119 because TEST 119 clears the cart.
+
+POST http://localhost:8080/api/v1/orders
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "shippingFirstName": "Test",
+  "shippingLastName": "Customer",
+  "shippingAddressLine1": "123 Test Street",
+  "shippingAddressLine2": "Apartment 101",
+  "shippingCity": "Mumbai",
+  "shippingState": "Maharashtra",
+  "shippingPostalCode": "400001",
+  "shippingCountry": "India",
+  "shippingPhone": "9876543210"
+}
+
+
+# ! TEST 123 - Create Order - WITHOUT AUTHENTICATION
+# Expected: HTTP 401
+# Purpose: Verify unauthenticated users cannot create orders
+
+POST http://localhost:8080/api/v1/orders
+Content-Type: application/json
+
+{
+  "shippingFirstName": "Test",
+  "shippingLastName": "Customer",
+  "shippingAddressLine1": "123 Test Street",
+  "shippingCity": "Mumbai",
+  "shippingState": "Maharashtra",
+  "shippingPostalCode": "400001",
+  "shippingCountry": "India",
+  "shippingPhone": "9876543210"
+}
+
+
+# ! TEST 124 - Get Order - WITHOUT AUTHENTICATION
+# Expected: HTTP 401
+# Purpose: Verify order details require authentication
+
+GET http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
+
+
+# ! TEST 125 - Get Order - NONEXISTENT ID
+# Expected: HTTP 404
+# Purpose: Verify requesting a nonexistent order returns not found
+
+GET http://localhost:8080/api/v1/orders/00000000-0000-0000-0000-000000000000
+Authorization: Bearer <AUTO_AUTH>
+
+
+# ! TEST 126 - Create Order - MISSING FIRST NAME
+# Expected: HTTP 400
+# Purpose: Verify shipping first name is required
+
+POST http://localhost:8080/api/v1/orders
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "shippingLastName": "Customer",
+  "shippingAddressLine1": "123 Test Street",
+  "shippingCity": "Mumbai",
+  "shippingState": "Maharashtra",
+  "shippingPostalCode": "400001",
+  "shippingCountry": "India",
+  "shippingPhone": "9876543210"
+}
+
+
+# ! TEST 127 - Create Order - MISSING ADDRESS
+# Expected: HTTP 400
+# Purpose: Verify shipping address is required
+
+POST http://localhost:8080/api/v1/orders
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "shippingFirstName": "Test",
+  "shippingLastName": "Customer",
+  "shippingCity": "Mumbai",
+  "shippingState": "Maharashtra",
+  "shippingPostalCode": "400001",
+  "shippingCountry": "India",
+  "shippingPhone": "9876543210"
+}
+
+
+# ! TEST 128 - Create Order - INVALID PHONE
+# Expected: HTTP 400
+# Purpose: Verify invalid shipping phone is rejected
+
+POST http://localhost:8080/api/v1/orders
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "shippingFirstName": "Test",
+  "shippingLastName": "Customer",
+  "shippingAddressLine1": "123 Test Street",
+  "shippingCity": "Mumbai",
+  "shippingState": "Maharashtra",
+  "shippingPostalCode": "400001",
+  "shippingCountry": "India",
+  "shippingPhone": ""
+}
+
+
+# ! TEST 129 - Update Order Status - CONFIRMED
+# Expected: HTTP 200
+# Purpose: Verify a pending order can be confirmed
+# NOTE: TEST 119 must have created an order.
+# NOTE: Use the order ID from TEST 119.
+
+PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "status": "CONFIRMED"
+}
+
+
+# ! TEST 130 - Update Order Status - PROCESSING
+# Expected: HTTP 200
+# Purpose: Verify a confirmed order can move to processing
+
+PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "status": "PROCESSING"
+}
+
+
+# ! TEST 131 - Update Order Status - SHIPPED
+# Expected: HTTP 200
+# Purpose: Verify a processing order can move to shipped
+
+PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "status": "SHIPPED"
+}
+
+
+# ! TEST 132 - Update Order Status - DELIVERED
+# Expected: HTTP 200
+# Purpose: Verify a shipped order can move to delivered
+
+PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "status": "DELIVERED"
+}
+
+
+# ! TEST 133 - Update Delivered Order - INVALID TRANSITION
+# Expected: HTTP 400
+# Purpose: Verify a delivered order cannot transition to another status
+
+PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "status": "PROCESSING"
+}
+
+
+# ! TEST 134 - Get Delivered Order - SUCCESS
+# Expected: HTTP 200
+# Purpose: Verify the final delivered order can still be retrieved
+
+GET http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
+Authorization: Bearer <AUTO_AUTH>
+
+
+# ! TEST 135 - Update Order Status - INVALID STATUS
+# Expected: HTTP 400
+# Purpose: Verify an unsupported order status is rejected
+
+PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "status": "INVALID_STATUS"
+}
+
+
+# ! TEST 136 - Update Order Status - WITHOUT AUTHENTICATION
+# Expected: HTTP 401
+# Purpose: Verify unauthenticated users cannot update order status
+
+PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+Content-Type: application/json
+
+{
+  "status": "PROCESSING"
+}
 ###
