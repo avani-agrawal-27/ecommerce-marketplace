@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getOrderById } from "../../api/orderApi";
+import { createPayment } from "../../api/paymentApi";
 import type { Order, OrderStatus } from "../../types/order";
 
 const statusLabels: Record<OrderStatus, string> = {
@@ -29,7 +30,9 @@ function OrderDetails() {
 
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+  const [paying, setPaying] = useState(false);
   const [error, setError] = useState("");
+  const [paymentMessage, setPaymentMessage] = useState("");
 
   useEffect(() => {
     const loadOrder = async () => {
@@ -57,7 +60,35 @@ function OrderDetails() {
 
     loadOrder();
   }, [orderId]);
+  const handlePayment = async () => {
+    if (!orderId || !order) {
+      return;
+    }
 
+    try {
+      setPaying(true);
+      setError("");
+      setPaymentMessage("");
+
+      await createPayment({
+        orderId,
+      });
+
+      // Reload the order from the backend so that
+      // the UI reflects the actual server-side status.
+      const updatedOrder = await getOrderById(orderId);
+
+      setOrder(updatedOrder);
+
+      setPaymentMessage("Payment successful. Your order is confirmed.");
+    } catch (err) {
+      console.error("Payment failed", err);
+
+      setError("Payment could not be completed. Please try again.");
+    } finally {
+      setPaying(false);
+    }
+  };
   if (loading) {
     return (
       <div className="page-container">
@@ -95,7 +126,29 @@ function OrderDetails() {
           {statusLabels[order.status]}
         </span>
       </div>
+      {paymentMessage && (
+        <div className="success-message">{paymentMessage}</div>
+      )}
 
+      {error && <div className="error-message">{error}</div>}
+
+      {order.status === "PENDING_PAYMENT" && (
+        <section className="payment-action">
+          <div>
+            <h2>Payment Required</h2>
+            <p>Complete payment to confirm this order.</p>
+          </div>
+
+          <button
+            type="button"
+            className="checkout-button"
+            onClick={handlePayment}
+            disabled={paying}
+          >
+            {paying ? "Processing Payment..." : "Pay Now"}
+          </button>
+        </section>
+      )}
       <section className="order-section">
         <h2>Items</h2>
 

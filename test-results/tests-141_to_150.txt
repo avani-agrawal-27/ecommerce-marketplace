@@ -1,0 +1,370 @@
+========================================================================
+API TEST EXECUTION REPORT
+========================================================================
+
+Selection: 141-150
+
+========================================================================
+TEST 141 - Create Payment - SUCCESS
+========================================================================
+
+Method: POST
+URL: http://localhost:8080/api/v1/payments
+
+Expected:
+HTTP 201
+
+Actual:
+HTTP 201
+
+Result:
+PASS
+
+Purpose:
+Verify an authenticated customer can create a payment for their own PENDING_PAYMENT order.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+Content-Type: application/json
+
+Request Body:
+{
+  "orderId": "151cbaf3-0d85-474a-97b7-6c93ad8be5b4"
+}
+
+Response:
+{
+  "id": "1e186365-9192-4c77-ab6c-bd7f10e2b348",
+  "orderId": "151cbaf3-0d85-474a-97b7-6c93ad8be5b4",
+  "paymentReference": "PAY-DE79E9F3E17A",
+  "provider": "MOCK",
+  "status": "SUCCESS",
+  "amount": 10998.0,
+  "currency": "INR",
+  "failureReason": null,
+  "createdAt": "2026-10-02T02:20:46.3228171",
+  "updatedAt": "2026-10-02T02:20:46.3228171"
+}
+
+========================================================================
+TEST 142 - Get Payment By ID - SUCCESS
+========================================================================
+
+Method: GET
+URL: http://localhost:8080/api/v1/payments/1e186365-9192-4c77-ab6c-bd7f10e2b348
+
+Expected:
+HTTP 200
+
+Actual:
+HTTP 200
+
+Result:
+PASS
+
+Purpose:
+Verify an authenticated customer can retrieve their own payment.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+
+Response:
+{
+  "id": "1e186365-9192-4c77-ab6c-bd7f10e2b348",
+  "orderId": "151cbaf3-0d85-474a-97b7-6c93ad8be5b4",
+  "paymentReference": "PAY-DE79E9F3E17A",
+  "provider": "MOCK",
+  "status": "SUCCESS",
+  "amount": 10998.0,
+  "currency": "INR",
+  "failureReason": null,
+  "createdAt": "2026-10-02T02:20:46.322817",
+  "updatedAt": "2026-10-02T02:20:46.356119"
+}
+
+========================================================================
+TEST 143 - Get Payments For Order - SUCCESS
+========================================================================
+
+Method: GET
+URL: http://localhost:8080/api/v1/payments/order/151cbaf3-0d85-474a-97b7-6c93ad8be5b4
+
+Expected:
+HTTP 200
+
+Actual:
+HTTP 200
+
+Result:
+PASS
+
+Purpose:
+Verify an authenticated customer can retrieve payment attempts for their own order.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+
+Response:
+[
+  {
+    "id": "1e186365-9192-4c77-ab6c-bd7f10e2b348",
+    "orderId": "151cbaf3-0d85-474a-97b7-6c93ad8be5b4",
+    "paymentReference": "PAY-DE79E9F3E17A",
+    "provider": "MOCK",
+    "status": "SUCCESS",
+    "amount": 10998.0,
+    "currency": "INR",
+    "failureReason": null,
+    "createdAt": "2026-10-02T02:20:46.322817",
+    "updatedAt": "2026-10-02T02:20:46.356119"
+  }
+]
+
+========================================================================
+TEST 144 - Payment For Confirmed Order - INVALID
+========================================================================
+
+Method: POST
+URL: http://localhost:8080/api/v1/payments
+
+Expected:
+HTTP 400
+
+Actual:
+HTTP 400
+
+Result:
+PASS
+
+Purpose:
+Verify payment cannot be created after the order has already been confirmed by a successful payment.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+Content-Type: application/json
+
+Request Body:
+{
+  "orderId": "151cbaf3-0d85-474a-97b7-6c93ad8be5b4"
+}
+
+Response:
+{
+  "message": "Payment is not allowed for order status: CONFIRMED",
+  "error": "Bad Request",
+  "status": 400
+}
+
+========================================================================
+TEST 145 - Payment For Nonexistent Order
+========================================================================
+
+Method: POST
+URL: http://localhost:8080/api/v1/payments
+
+Expected:
+HTTP 404
+
+Actual:
+HTTP 404
+
+Result:
+PASS
+
+Purpose:
+Verify payment creation fails when the referenced order does not exist.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+Content-Type: application/json
+
+Request Body:
+{
+  "orderId": "00000000-0000-0000-0000-000000000000"
+}
+
+Response:
+{
+  "message": "Order not found: 00000000-0000-0000-0000-000000000000",
+  "error": "Not Found",
+  "status": 404
+}
+
+========================================================================
+TEST 146 - Create Payment - MISSING ORDER ID
+========================================================================
+
+Method: POST
+URL: http://localhost:8080/api/v1/payments
+
+Expected:
+HTTP 400
+
+Actual:
+HTTP 400
+
+Result:
+PASS
+
+Purpose:
+Verify orderId is required when creating a payment.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+Content-Type: application/json
+
+Request Body:
+{}
+
+Response:
+{
+  "status": 400,
+  "fieldErrors": {
+    "orderId": "Order ID is required"
+  },
+  "message": "Request validation failed",
+  "error": "Validation Failed"
+}
+
+========================================================================
+TEST 147 - Create Payment - WITHOUT AUTHENTICATION
+========================================================================
+
+Method: POST
+URL: http://localhost:8080/api/v1/payments
+
+Expected:
+HTTP 401
+
+Actual:
+HTTP 401
+
+Result:
+PASS
+
+Purpose:
+Verify unauthenticated users cannot create payments.
+
+Request Headers:
+Content-Type: application/json
+
+Request Body:
+{
+  "orderId": "151cbaf3-0d85-474a-97b7-6c93ad8be5b4"
+}
+
+Response:
+{
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Authentication is required"
+}
+
+========================================================================
+TEST 148 - Create Payment - NON-OWNER
+========================================================================
+
+Method: POST
+URL: http://localhost:8080/api/v1/payments
+
+Expected:
+HTTP 403
+
+Actual:
+HTTP 403
+
+Result:
+PASS
+
+Purpose:
+Verify an authenticated user cannot create a payment for another user's order.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+Content-Type: application/json
+
+Request Body:
+{
+  "orderId": "151cbaf3-0d85-474a-97b7-6c93ad8be5b4"
+}
+
+Response:
+{
+  "message": "You are not authorized to pay for this order",
+  "error": "Forbidden",
+  "status": 403
+}
+
+========================================================================
+TEST 149 - Get Payment - NON-OWNER
+========================================================================
+
+Method: GET
+URL: http://localhost:8080/api/v1/payments/1e186365-9192-4c77-ab6c-bd7f10e2b348
+
+Expected:
+HTTP 403
+
+Actual:
+HTTP 403
+
+Result:
+PASS
+
+Purpose:
+Verify an authenticated user cannot retrieve another user's payment.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+
+Response:
+{
+  "message": "You are not authorized to view this payment",
+  "error": "Forbidden",
+  "status": 403
+}
+
+========================================================================
+TEST 150 - Duplicate Successful Payment
+========================================================================
+
+Method: POST
+URL: http://localhost:8080/api/v1/payments
+
+Expected:
+HTTP 400
+
+Actual:
+HTTP 400
+
+Result:
+PASS
+
+Purpose:
+Verify a second payment cannot be created after the order has already been successfully paid.
+
+Request Headers:
+Authorization: Bearer <REDACTED>
+Content-Type: application/json
+
+Request Body:
+{
+  "orderId": "151cbaf3-0d85-474a-97b7-6c93ad8be5b4"
+}
+
+Response:
+{
+  "message": "Payment is not allowed for order status: CONFIRMED",
+  "error": "Bad Request",
+  "status": 400
+}
+
+========================================================================
+SUMMARY
+========================================================================
+
+Total:   10
+Passed:  10
+Failed:  0
+Blocked: 0
+Pass Rate: 100.00%

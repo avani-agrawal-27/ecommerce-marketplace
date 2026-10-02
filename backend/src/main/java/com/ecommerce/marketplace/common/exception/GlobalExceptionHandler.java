@@ -97,4 +97,16 @@ public class GlobalExceptionHandler {
                 "message", "Invalid email or password"
         );
     }
+
+    @ExceptionHandler(ForbiddenOperationException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Map<String, Object> handleForbiddenOperation(
+            ForbiddenOperationException exception
+    ) {
+        return Map.of(
+            "status", 403,
+            "error", "Forbidden",
+            "message", exception.getMessage()
+                );
+    }
 }

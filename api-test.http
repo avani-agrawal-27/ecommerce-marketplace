@@ -1290,7 +1290,7 @@ Content-Type: application/json
 
 # Purpose: Create an order from the authenticated customer's populated cart
 
-POST http://localhost:8080/api/v1/orders
+POST {{baseUrl}}/orders
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1310,7 +1310,7 @@ Content-Type: application/json
 # Purpose: Verify an authenticated customer can retrieve the order they created
 # NOTE: Replace 0c5fab43-c745-49b1-812b-f74db4aa0e57 with the ID returned by TEST 119
 
-GET http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
+GET {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
 Authorization: Bearer <AUTO_AUTH>
 
 
@@ -1318,7 +1318,7 @@ Authorization: Bearer <AUTO_AUTH>
 # Expected: HTTP 200
 # Purpose: Verify the authenticated customer can retrieve their order history
 
-GET http://localhost:8080/api/v1/orders
+GET {{baseUrl}}/orders
 Authorization: Bearer <AUTO_AUTH>
 
 
@@ -1328,7 +1328,7 @@ Authorization: Bearer <AUTO_AUTH>
 #
 # Run this after TEST 119 because TEST 119 clears the cart.
 
-POST http://localhost:8080/api/v1/orders
+POST {{baseUrl}}/orders
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1349,7 +1349,7 @@ Content-Type: application/json
 # Expected: HTTP 401
 # Purpose: Verify unauthenticated users cannot create orders
 
-POST http://localhost:8080/api/v1/orders
+POST {{baseUrl}}/orders
 Content-Type: application/json
 
 {
@@ -1368,14 +1368,14 @@ Content-Type: application/json
 # Expected: HTTP 401
 # Purpose: Verify order details require authentication
 
-GET http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
+GET {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
 
 
 # ! TEST 125 - Get Order - NONEXISTENT ID
 # Expected: HTTP 404
 # Purpose: Verify requesting a nonexistent order returns not found
 
-GET http://localhost:8080/api/v1/orders/00000000-0000-0000-0000-000000000000
+GET {{baseUrl}}/orders/00000000-0000-0000-0000-000000000000
 Authorization: Bearer <AUTO_AUTH>
 
 
@@ -1383,7 +1383,7 @@ Authorization: Bearer <AUTO_AUTH>
 # Expected: HTTP 400
 # Purpose: Verify shipping first name is required
 
-POST http://localhost:8080/api/v1/orders
+POST {{baseUrl}}/orders
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1402,7 +1402,7 @@ Content-Type: application/json
 # Expected: HTTP 400
 # Purpose: Verify shipping address is required
 
-POST http://localhost:8080/api/v1/orders
+POST {{baseUrl}}/orders
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1421,7 +1421,7 @@ Content-Type: application/json
 # Expected: HTTP 400
 # Purpose: Verify invalid shipping phone is rejected
 
-POST http://localhost:8080/api/v1/orders
+POST {{baseUrl}}/orders
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1443,7 +1443,7 @@ Content-Type: application/json
 # NOTE: TEST 119 must have created an order.
 # NOTE: Use the order ID from TEST 119.
 
-PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+PATCH {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1456,7 +1456,7 @@ Content-Type: application/json
 # Expected: HTTP 200
 # Purpose: Verify a confirmed order can move to processing
 
-PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+PATCH {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1469,7 +1469,7 @@ Content-Type: application/json
 # Expected: HTTP 200
 # Purpose: Verify a processing order can move to shipped
 
-PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+PATCH {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1482,7 +1482,7 @@ Content-Type: application/json
 # Expected: HTTP 200
 # Purpose: Verify a shipped order can move to delivered
 
-PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+PATCH {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1495,7 +1495,7 @@ Content-Type: application/json
 # Expected: HTTP 400
 # Purpose: Verify a delivered order cannot transition to another status
 
-PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+PATCH {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1508,7 +1508,7 @@ Content-Type: application/json
 # Expected: HTTP 200
 # Purpose: Verify the final delivered order can still be retrieved
 
-GET http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
+GET {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57
 Authorization: Bearer <AUTO_AUTH>
 
 
@@ -1516,7 +1516,7 @@ Authorization: Bearer <AUTO_AUTH>
 # Expected: HTTP 400
 # Purpose: Verify an unsupported order status is rejected
 
-PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+PATCH {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
 Authorization: Bearer <AUTO_AUTH>
 Content-Type: application/json
 
@@ -1529,10 +1529,140 @@ Content-Type: application/json
 # Expected: HTTP 401
 # Purpose: Verify unauthenticated users cannot update order status
 
-PATCH http://localhost:8080/api/v1/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
+PATCH {{baseUrl}}/orders/0c5fab43-c745-49b1-812b-f74db4aa0e57/status
 Content-Type: application/json
 
 {
   "status": "PROCESSING"
 }
+###
+
+
+### ================================================================
+### PAYMENT MANAGEMENT TESTS
+### ================================================================
+
+# ! TEST 141 - Create Payment - SUCCESS
+# Expected: HTTP 201
+# Purpose: Verify an authenticated customer can create a payment for their own PENDING_PAYMENT order.
+# NOTE: Create a fresh PENDING_PAYMENT order before running this test.
+# NOTE: Replace PAYMENT_TEST_ORDER_ID with the order ID returned by the order creation test.
+
+POST {{baseUrl}}/payments
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "orderId": "<PAYMENT_TEST_ORDER_ID>"
+}
+
+
+# ! TEST 142 - Get Payment By ID - SUCCESS
+# Expected: HTTP 200
+# Purpose: Verify an authenticated customer can retrieve their own payment.
+# NOTE: Replace PAYMENT_TEST_PAYMENT_ID with the payment ID returned by TEST 141.
+
+GET {{baseUrl}}/payments/<PAYMENT_TEST_PAYMENT_ID>
+Authorization: Bearer <AUTO_AUTH>
+
+
+# ! TEST 143 - Get Payments For Order - SUCCESS
+# Expected: HTTP 200
+# Purpose: Verify an authenticated customer can retrieve payment attempts for their own order.
+# NOTE: Replace PAYMENT_TEST_ORDER_ID with the order ID used by TEST 141.
+
+GET {{baseUrl}}/payments/order/<PAYMENT_TEST_ORDER_ID>
+Authorization: Bearer <AUTO_AUTH>
+
+
+# ! TEST 144 - Payment For Confirmed Order - INVALID
+# Expected: HTTP 400
+# Purpose: Verify payment cannot be created after the order has already been confirmed by a successful payment.
+# NOTE: TEST 141 must have succeeded first.
+# NOTE: Replace PAYMENT_TEST_ORDER_ID with the order ID used by TEST 141.
+
+POST {{baseUrl}}/payments
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "orderId": "<PAYMENT_TEST_ORDER_ID>"
+}
+
+
+# ! TEST 145 - Payment For Nonexistent Order
+# Expected: HTTP 404
+# Purpose: Verify payment creation fails when the referenced order does not exist.
+
+POST {{baseUrl}}/payments
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "orderId": "00000000-0000-0000-0000-000000000000"
+}
+
+
+# ! TEST 146 - Create Payment - MISSING ORDER ID
+# Expected: HTTP 400
+# Purpose: Verify orderId is required when creating a payment.
+
+POST {{baseUrl}}/payments
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{}
+
+
+# ! TEST 147 - Create Payment - WITHOUT AUTHENTICATION
+# Expected: HTTP 401
+# Purpose: Verify unauthenticated users cannot create payments.
+
+POST {{baseUrl}}/payments
+Content-Type: application/json
+
+{
+  "orderId": "<PAYMENT_TEST_ORDER_ID>"
+}
+
+
+# ! TEST 148 - Create Payment - NON-OWNER
+# Expected: HTTP 403
+# Purpose: Verify an authenticated user cannot create a payment for another user's order.
+# NOTE: This test requires a valid JWT for a user who does NOT own PAYMENT_TEST_ORDER_ID.
+# NOTE: Replace SELLER_JWT with a valid seller/admin/customer token belonging to another user before running manually.
+
+POST {{baseUrl}}/payments
+Authorization: Bearer <SELLER_JWT>
+Content-Type: application/json
+
+{
+  "orderId": "<PAYMENT_TEST_ORDER_ID>"
+}
+
+
+# ! TEST 149 - Get Payment - NON-OWNER
+# Expected: HTTP 403
+# Purpose: Verify an authenticated user cannot retrieve another user's payment.
+# NOTE: This test requires a valid JWT for a user who does NOT own PAYMENT_TEST_PAYMENT_ID.
+# NOTE: Replace SELLER_JWT with a valid seller/admin/customer token belonging to another user before running manually.
+
+GET {{baseUrl}}/payments/<PAYMENT_TEST_PAYMENT_ID>
+Authorization: Bearer <SELLER_JWT>
+
+
+# ! TEST 150 - Duplicate Successful Payment
+# Expected: HTTP 400
+# Purpose: Verify a second payment cannot be created after the order has already been successfully paid.
+# NOTE: TEST 141 must have succeeded first.
+# NOTE: Replace PAYMENT_TEST_ORDER_ID with the order ID used by TEST 141.
+
+POST {{baseUrl}}/payments
+Authorization: Bearer <AUTO_AUTH>
+Content-Type: application/json
+
+{
+  "orderId": "<PAYMENT_TEST_ORDER_ID>"
+}
+
 ###

@@ -198,9 +198,9 @@ function Cart() {
           <span>₹{cart.totalAmount.toFixed(2)}</span>
         </div>
 
-        <button type="button" className="checkout-button">
-          Checkout — Coming Soon
-        </button>
+        <Link to="/checkout" className="checkout-button">
+          Proceed to Checkout
+        </Link>
       </div>
     </div>
   );
